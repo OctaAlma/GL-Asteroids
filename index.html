@@ -1,0 +1,139 @@
+<!-- 
+Name: Octavio Almanza
+UIN: 628005492
+CSCE 450H: Computer Animation Fall 2023
+-->
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <title>CSCE 450 Final - Octavio Almanza</title>
+        <link href="index.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <h1 class="title"> GL-ASTEROIDS </h1>
+        <h2 class="title">video game program</h2>
+        <h3 class="title">HYPERSPACE • THRUST CONTROL • MANEUVERS</h3>
+
+        <div class="line"></div>
+
+        <div class="videoContainer">
+            <h4 class="title">PRESENTATION VIDEO</h4>
+            <iframe class="video" src="https://www.youtube.com/embed/yFs3Ael4QkM?si=I9kgSkctw17ZFMO4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+        <div class="line"></div>
+    
+        <div class="content">
+            <h4 class="title">ANIMATION TECHNIQUES</h4>
+
+            <ul>
+                <li class="desc"><b>Dynamic Keyframes • </b> 
+                    This core goal of the project was to implement dynamic keyframing. 
+                    In assignment 1, we implemented keyframes that were set at compile time. 
+                    In my project, keyframed animations can be triggered by the press of a button. 
+                    The final position of these keyframes depend the position and velocity of the ship at the moment the animation was triggered. 
+                </li>
+            </ul>
+                
+            <div class="gif">
+                <img src="./dynamic_keyframes.gif">
+            </div>
+            
+            <ul>
+                <li class="desc"><b>Particle Effects • </b>
+                    I also decided to implement a particle system to better convey the actions and events of the game. 
+                    Particles are generated whenever the ship accelerates in the forward direction. 
+                    As the particle approaches the end of its lifespan, its color transitions from a deep red to a light yellow.
+                    <br><br>
+                    Particles are also created whenever the asteroids are destroyed. An "explosion" can be seen following the collision of a beam and an asteroid.
+                    If the ship collides with an asteroid and it has no more lives left, the ship will explode as well.
+                    <br><br>
+                    My explosion system was adapted from the <code>Particle</code> class provided for <a href="https://people.engr.tamu.edu/sueda/courses/CSCE450/2023F/labs/L06/index.html">Lab 6</a>, which uses <code>GL_POINTS</code> drawn as "billboarded" quads with alpha blending.
+                </li>
+            </ul>
+
+            <div class="gif">
+                <img src="./particle-effects.gif">
+            </div>
+
+            <ul>
+                <li class="desc"><b>Collision Detection • </b>
+                    Collisions are managed through bounding spheres for both the asteroids and the spaceship. 
+                    When initialized, each asteroid has a predetermined radius that is used to calculate the size of its hitbox. 
+                    Continuous sphere-to-sphere collision detection is performed for the spaceship and all of the asteroids. 
+                    Laser beams are represented internally by line segments, and line-sphere intersections are performed to check if they collide with any asteroids while they are "active".  
+                    <br><br>
+                </li>                
+            </ul>
+
+            <div class="screenshot">
+                <img src="./bounding_boxes.png">
+            </div> 
+            
+            <ul class="desc">
+                Whenever the hitbox of an asteroid overlaps with the hitbox of the spaceship, the spaceship either explodes or takes "damage" in the form of a life.
+            </ul>
+            
+            <div class="gif">
+                <img src="./ship-death.gif">
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="content">
+            <h4 class="title">CONTROLS</h4>
+
+            <ul>
+                <li class="desc"> The <b>WASD</b> keys can be used to move the ship around the map.</li>
+                <li class="desc"> The <b>Q</b> and <b>E</b> keys trigger left and right barrel-rolls, respectively.</li>
+                <li class="desc"> The <b>SPACEBAR</b> key triggers a somersault.</li>
+                <li class="desc"> The <b>J</b> key can be used to fire a plasma beam. Use this to destroy the asteroids!</li>
+                <li class="desc"> The <b>V</b> key can be used to switch between third-person, top-down, and first-person cameras.</li>
+                <li class="desc"> The <b>P</b> key can be used to pause the game.</li>
+                <li class="desc"> The <b>B</b> key can be used to toggle bounding spheres.</li>
+                <li class="desc"> The <b>F</b> key can be used to increase the field of fiew.</li>
+                <li class="desc"> The <b>G</b> key can be used to decrease the field of view.</li>
+            </ul>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="content">
+            <h4 class="title">RESOURCES</h4>
+            
+            <ul>
+                <li class="desc"> The following libraries were used for the development of this project: </li>
+                <ul>
+                    <li> <b>CMAKE</b> for "out-of-source" build compilation. Available <a href="https://cmake.org/download/">here</a>. </li>
+                    <li> <b>GLM</b> for useful data structures and OpenGL-like syntax. Available <a href="https://github.com/g-truc/glm">here</a>. </li>
+                    <li> <b>GLFW</b> for creating windows and input detection. Available <a href="https://www.glfw.org">here</a>. </li>
+                    <li> <b>GLEW</b> for OpenGL extension loading. Available <a href="https://glew.sourceforge.net">here</a>. </li>
+                    <li> <b>EIGEN3</b> to map vector values to a specific location in memory. Available <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">here</a>. </li>
+                </ul>
+                <li class="desc"> Spaceship model was obtained from <a href="https://sketchfab.com/3d-models/low-poly-space-ship-587941c9c11742c6b82dfb99e7b210b9">Sketchfab</a>.</li>
+                <li class="desc"> Asteroid model was obtained from <a href="https://free3d.com/3d-model/-asteroid--962525.html">Free3D</a>.</li>
+                <li class="desc"> Line-segment-sphere collision detection code was based off of a guide from <a href="https://www.baeldung.com/cs/circle-line-segment-collision-detection">Baelung</a>.</li>
+                <li class="desc"> Random float generation was obtained from <a href="https://stackoverflow.com/questions/5289613/generate-random-float-between-two-floats">this</a> Stack Overflow post.</li>
+                <li class="dec"> Website PumpOpti font was obtained from <a href="https://www.ffonts.net/PumpOpti-Medium.font">FFonts</a>.</li>
+                <li clas="desc"> Website background was obtained from <a href="https://www.reddit.com/r/PixelArt/comments/f1wg26/space_background/">reddit</a>, and was created by u/astrellon3. </li>
+                <li class="desc"> Music in the presentation video background is called <a href="">Asteroid Run</a>. It is from the game Cybernator for the SNES. </li>
+            </ul>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="content">
+            <h4 class="title"><a href="https://github.com/OctaAlma/450-Final">DOWNLOAD</a></h4>
+        </div>
+
+        <footer class="title">
+            PROGRAM CODE IS OPEN SOURCE AND FREE TO USE.
+            <br><br>
+            CSCE 450: COMPUTER ANIMATION FINAL PROJECT DEVELOPED BY OCTAVIO ALMANZA. 
+        </footer>
+    </body>
+</html>
